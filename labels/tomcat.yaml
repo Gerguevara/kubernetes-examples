@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tomcat
+  labels:
+    state: "development"
+    created_by: "Geguevara"
+spec:
+  containers:
+   - name: tomcat
+     image: tomcat
+     resources:
+       limits:
+         cpu: "1"
+         memory: "500Mi"
+       requests:
+         cpu: "0.5"
+         memory: "200Mi"
+
+
+# basicos:
+
+# Los Labels se pueden usar para filtrar los recursos de kubernetes,  al utilizar el comando apply estos son agregados al recurso (esta forma declarativa es la recomendada)
+# Para filtrar los recursos se utiliza el comando get y se le pasa el label que se quiere filtrar ejempl: kubectl get pods -l state=development
+# Para filtrar por mas de un label se utiliza el comando get y se le pasa el label que se quiere filtrar ejempl: kubectl get pods -l state=development,created_by=Geguevara
+# Para actualizar un label se utiliza el comando label y se le pasa el label que se quiere actualizar ejempl: kubectl label pods tomcat state=production --overwrite
+# Para eliminar un label se utiliza el comando label y se le pasa el label que se quiere eliminar ejempl: kubectl label pods tomcat state-
+
+# Los selectores: son como wheres que sirven para hacer busquedas entre pots utros elementos de kubernetes
+
+# Ejemplo1:
+# kubectl get pods --show-labels  -l state=development
+
+# Ejemplo2 (dos o mas  clausulas):
+# kubectl get pods --show-labels  -l state=development,created_by=Geguevara
+
+# Ejemplo3 (aplicando negacion ):
+# kubectl get pods --show-labels  -l state=development,created_by!=Geguevara --selector=state=development
+
+# ejemplo4 (operacion in ):
+# kubectl get pods --show-labels  -l state in (development,production)
+
+
+# Anotaciones: son como los labels pero no se pueden utilizar para filtrar los recursos de kubernetes, son mas descripciones de los recursos, ya sea comentarios o informacion adicional
+# para buscar anotaciones se utiliza el comando describe y se le pasa el nombre del recurso ejemplo: kubectl describe pods tomcat o con kubectl get pods tomcat -o jsonpath='{.metadata.annotations}'
+
+# ejemplo de anotaciones:
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: tomcat
+#   labels:
+#     state: "development"
+#     created_by: "Geguevara"
+#   annotations:
+#     description: "Este es un pod de prueba"
+# spec: 
+#   containers:
+#    - name: tomcat
+#      image: tomcat
