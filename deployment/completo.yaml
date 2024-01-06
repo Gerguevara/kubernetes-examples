@@ -21,7 +21,7 @@ spec:
         ports:
         - containerPort: 80
 ---
-
+# para hacer un split de yml se utilizan ---
 #############
 # SERVICIO  
 #############
@@ -38,4 +38,6 @@ spec:
     nodePort: 30002
     protocol: TCP
   selector:
-     app: web
+     app: web 
+# apunta al label correspondiente  recursos de tipo pod o deployment, en este caso app: web se ebcuebntra en el deployment (por medio de matchLabels) y en el pod (por medio de labels) 
+# y se pueden tomar en cuenta ambos para la creacion del servicio
